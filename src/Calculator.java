@@ -3,14 +3,16 @@ public class Calculator {
     public static void main(String[] args) throws CalculatorException {
 //        System.out.println("Введите выражение");
         Scanner scanner = new Scanner(System.in);
-        String calc = scanner.nextLine();
-        calc = calc.replaceAll(" ", "");
-        calc = calc.toUpperCase();
-        String[] input = calc.split("[-+*/]");
+        String inputing = scanner.nextLine();
+        inputing = inputing.replaceAll(" ", "");
+        inputing = inputing.toUpperCase();
+        String operator = inputing;
+        operator = operator.replaceAll("[A-Za-zА-Яа-я0-9]", "");
+        String[] input = inputing.split("[-+*/]");
         if (input.length == 0) {
             throw new CalculatorException("т.к. строка не является математической операцией");
         }
-        if ((input[0] == "") | (input.length == 1) | calc.endsWith("+") | calc.endsWith("-") | calc.endsWith("*") | calc.endsWith("/")) {
+        if ((input[0] == "") | (input.length == 1) | inputing.endsWith("+") | inputing.endsWith("-") | inputing.endsWith("*") | inputing.endsWith("/")) {
             throw new CalculatorException("т.к. строка не является поддерживаемой математической операцией");
         }
         if (input.length > 2) {
@@ -72,26 +74,44 @@ public class Calculator {
         for (int i = 0; i < input.length; i++) {
             inputEdited[i] = Integer.parseInt(inputConvert[i]);
         }
-            if (operandCheck1 != operandCheck2) {
-                throw new CalculatorException("т.к. используются одновременно разные системы счисления");
-            }
-        int answer = 0;
-            if (calc.indexOf(43) > -1) {
-                answer = inputEdited[0] + inputEdited[1];
-            } else if (calc.indexOf(45) > -1) {
-                answer = inputEdited[0] - inputEdited[1];
-            } else if (calc.indexOf(42) > -1) {
-                answer = inputEdited[0] * inputEdited[1];
-            } else if (calc.indexOf(47) > -1) {
-                answer = inputEdited[0] / inputEdited[1];
-            }
-        if (((operandCheck1 == 1) & (operandCheck2 == 1)) & (answer < 1)) {
-            throw new CalculatorException("т.к. в римской системе нет отрицательных чисел и нуля");
+        if (operandCheck1 != operandCheck2) {
+            throw new CalculatorException("т.к. используются одновременно разные системы счисления");
         }
-        String[] answerRoman = new String[] {"0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL", "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX", "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX", "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX", "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC", "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"};
+        Main main1 = new Main();
+        main1.operand1 = inputEdited[0];
+        main1.operand2 = inputEdited[1];
+        main1.operandCheck1InMain = operandCheck1;
+        main1.operandCheck2InMain = operandCheck2;
 //        System.out.println("Ответ");
-        if ((operandCheck1 == 1) & (operandCheck2 == 1)) {
-            System.out.print(answerRoman[answer]);
-        } else System.out.print(answer);
+        Main.calc(operator);
+    }
+}
+class Main {
+    static int operand1;
+    static int operand2;
+    static int answerInMain;
+    static int operandCheck1InMain;
+    static int operandCheck2InMain;
+    static String[] answerRomanInMain = new String[]{"0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL", "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX", "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX", "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX", "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC", "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"};
+    public static String calc(String input) throws CalculatorException {
+        if (input.indexOf(43) > -1)
+        {answerInMain = operand1 + operand2;}
+        else if (input.indexOf(45) > -1)
+        {answerInMain = operand1 - operand2;}
+        else if (input.indexOf(42) > -1)
+        {answerInMain = operand1 * operand2;}
+        else if (input.indexOf(47) > -1)
+        {answerInMain = operand1 / operand2;}
+        if (((operandCheck1InMain == 1) & (operandCheck2InMain == 1)) & (answerInMain < 1))
+        {throw new CalculatorException("т.к. в римской системе нет отрицательных чисел и нуля");}
+        if ((operandCheck1InMain == 1) & (operandCheck2InMain == 1))
+        {System.out.print(answerRomanInMain[answerInMain]);}
+        else System.out.print(answerInMain);
+        return input;
+    }
+}
+class CalculatorException extends java.lang.Exception {
+    public CalculatorException(String description) {
+        super(description);
     }
 }
