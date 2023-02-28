@@ -94,14 +94,12 @@ class Main {
     static int operandCheck2InMain;
     static String[] answerRomanInMain = new String[]{"0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL", "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX", "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX", "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX", "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC", "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"};
     public static String calc(String input) throws CalculatorException {
-        if (input.indexOf(43) > -1)
-        {answerInMain = operand1 + operand2;}
-        else if (input.indexOf(45) > -1)
-        {answerInMain = operand1 - operand2;}
-        else if (input.indexOf(42) > -1)
-        {answerInMain = operand1 * operand2;}
-        else if (input.indexOf(47) > -1)
-        {answerInMain = operand1 / operand2;}
+        switch (input) {
+            case "+" : answerInMain = operand1 + operand2; break;
+            case "-" : answerInMain = operand1 - operand2; break;
+            case "*" : answerInMain = operand1 * operand2; break;
+            case "/" : answerInMain = operand1 / operand2; break;
+        }
         if (((operandCheck1InMain == 1) & (operandCheck2InMain == 1)) & (answerInMain < 1))
         {throw new CalculatorException("т.к. в римской системе нет отрицательных чисел и нуля");}
         if ((operandCheck1InMain == 1) & (operandCheck2InMain == 1))
